@@ -69,7 +69,7 @@ public class BootNettyServer {
     }
 
     private ChannelInitializer initSSL() throws NoSuchAlgorithmException {
-        SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.1");
         String keyStorePassword = "keystore";
         try {
             KeyStore ks = KeyStore.getInstance("JKS");
@@ -104,6 +104,8 @@ public class BootNettyServer {
         sslEngine.setUseClientMode(false);
         sslEngine.setNeedClientAuth(true);
         sslEngine.setEnableSessionCreation(true);
+        sslEngine.setEnabledProtocols(new String[] {"TLSv1.2"});
+        sslEngine.setEnabledCipherSuites(new String[]{"TLS_RSA_WITH_AES_128_GCM_SHA256"});
 
         ChannelInitializer ch = new ChannelInitializer<>() {
             @Override
